@@ -26,6 +26,6 @@
   border-radius: 4px;
 }
 
-.fsb-bar .fsb-warning span {
+#fsb-bar > div > span > bdi {
   color: #fff!important;
 }
