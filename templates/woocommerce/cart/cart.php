@@ -179,17 +179,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 					<button type="submit" class="button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
 
-          <?php
-          $data = function_exists('fsb_get_bar_data') ? fsb_get_bar_data() : null;
-          if ($data):
-          ?>
-              <div class="fsb-button--wrapper">
-                  <a href="<?php echo esc_url($data['link']); ?>" class="button fsb-button">
-                      <?php echo esc_html($data['label']); ?>
-                  </a>
-              </div>
-          <?php endif; ?>
-
 					<?php do_action( 'woocommerce_cart_actions' ); ?>
 
 					<?php wp_nonce_field( 'woocommerce-cart', 'woocommerce-cart-nonce' ); ?>
