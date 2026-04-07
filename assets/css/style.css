@@ -30,7 +30,7 @@
   border-radius: 4px;
 }
 
-#fsb-bar > div > span > bdi {
+#fsb-bar .amount {
   color: #fff!important;
 }
 
