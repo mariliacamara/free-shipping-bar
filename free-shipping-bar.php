@@ -17,8 +17,6 @@ require_once FSB_PATH . 'includes/ajax.php';
 
 // assets
 add_action('wp_enqueue_scripts', function () {
-
-    // só carrega no carrinho
     if (function_exists('is_cart') && !is_cart()) {
         return;
     }
@@ -36,27 +34,23 @@ add_action('wp_enqueue_scripts', function () {
         true
     );
 
-    // garante que WooCommerce está pronto
     if (function_exists('WC') && WC()->cart) {
-
-        $data = fsb_get_bar_data();
-
-        ob_start();
-
-        if ($data) {
-            ?>
-            <div class="fsb-button--wrapper">
-                <a href="<?php echo esc_url($data['link']); ?>" class="fsb-button">
-                    <?php echo esc_html($data['label']); ?>
-                </a>
-            </div>
-            <?php
-        }
-
-        $button_html = ob_get_clean();
-
         wp_localize_script('fsb-script', 'fsbData', [
             'ajax_url' => admin_url('admin-ajax.php')
         ]);
     }
 });
+
+add_filter('woocommerce_locate_template', function ($template, $template_name, $template_path) {
+
+    $plugin_path = FSB_PATH . 'templates/woocommerce/';
+
+    $custom_template = $plugin_path . $template_name;
+
+    if (file_exists($custom_template)) {
+        return $custom_template;
+    }
+
+    return $template;
+
+}, 10, 3);
