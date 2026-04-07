@@ -13,13 +13,18 @@ jQuery(function ($) {
         // remove antigo
         container.find('.fsb-button--wrapper').remove();
 
-        // 🔥 pega botão atualizado do backend
-        $.get('/wp-admin/admin-ajax.php?action=fsb_get_button', function (html) {
+        $.ajax({
+            url: fsbData.ajax_url,
+            method: 'GET',
+            data: {
+                action: 'fsb_get_button'
+            },
+            success: function (html) {
 
-            if (!html) return;
+                if (!html) return;
 
-            container.append(html);
-
+                container.append(html);
+            }
         });
     }
 

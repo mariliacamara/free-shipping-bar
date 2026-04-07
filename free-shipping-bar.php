@@ -56,8 +56,7 @@ add_action('wp_enqueue_scripts', function () {
         $button_html = ob_get_clean();
 
         wp_localize_script('fsb-script', 'fsbData', [
-            'button_html' => $button_html,
-            'remaining'   => $data['remaining'] ?? 0
+            'ajax_url' => admin_url('admin-ajax.php')
         ]);
     }
 });
