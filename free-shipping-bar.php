@@ -17,10 +17,6 @@ require_once FSB_PATH . 'includes/ajax.php';
 
 // assets
 add_action('wp_enqueue_scripts', function () {
-    if (function_exists('is_cart') && !is_cart()) {
-        return;
-    }
-
     wp_enqueue_style(
         'fsb-style',
         FSB_URL . 'assets/css/style.css'
