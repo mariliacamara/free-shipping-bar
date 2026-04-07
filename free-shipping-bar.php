@@ -13,6 +13,7 @@ require_once FSB_PATH . 'includes/hooks.php';
 require_once FSB_PATH . 'includes/helpers.php';
 require_once FSB_PATH . 'includes/admin/settings-page.php';
 require_once FSB_PATH . 'includes/admin/settings-register.php';
+require_once FSB_PATH . 'includes/ajax.php';
 
 // assets
 add_action('wp_enqueue_scripts', function () {
