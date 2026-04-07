@@ -34,6 +34,7 @@
   color: #fff!important;
 }
 
-button[name="update_cart"] {
+button[name="update_cart"],
+.woocommerce-cart-form button[name="update_cart"] {
     display: none !important;
 }
