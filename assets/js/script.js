@@ -4,7 +4,7 @@ jQuery(function ($) {
         const btn = $('button[name="update_cart"]');
 
         if (btn.length) {
-            btn.remove(); // remove MESMO
+            btn.prop('disabled', true).hide(); // remove MESMO
         }
     }
 
