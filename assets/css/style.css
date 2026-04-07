@@ -1,27 +1,31 @@
 .fsb-bar {
-    margin-top: 15px;
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 6px;
+  margin-top: 15px;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 6px;
 }
 
 .fsb-warning {
-    background: #e53935;
-    color: #fff;
+  background: #e53935;
+  color: #fff;
 }
 
 .fsb-success {
-    background: #2e7d32;
-    color: #fff;
+  background: #2e7d32;
+  color: #fff;
 }
 
 .fsb-button {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 8px 12px;
-    background: #1e3a8a;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #1e3a8a;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.fsb-bar .fsb-warning span {
+  color: #fff;
 }
