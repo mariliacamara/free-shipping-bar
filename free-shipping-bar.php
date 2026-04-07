@@ -16,6 +16,35 @@ require_once FSB_PATH . 'includes/admin/settings-register.php';
 
 // assets
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('fsb-style', FSB_URL . 'assets/css/style.css');
-    wp_enqueue_script('fsb-script', FSB_URL . 'assets/js/script.js', ['jquery'], null, true);
+
+    // 🔒 opcional: só carregar no carrinho
+    if (function_exists('is_cart') && !is_cart()) {
+        return;
+    }
+
+    wp_enqueue_style(
+        'fsb-style',
+        FSB_URL . 'assets/css/style.css'
+    );
+
+    wp_enqueue_script(
+        'fsb-script',
+        FSB_URL . 'assets/js/script.js',
+        ['jquery'],
+        null,
+        true
+    );
+
+    // garante que WooCommerce já está disponível
+    if (function_exists('WC') && WC()->cart) {
+
+        $data = fsb_get_bar_data();
+
+        wp_localize_script('fsb-script', 'fsbData', [
+            'link'      => $data['link'] ?? '#',
+            'label'     => $data['label'] ?? 'Ver promoções',
+            'remaining' => $data['remaining'] ?? 0
+        ]);
+    }
+
 });

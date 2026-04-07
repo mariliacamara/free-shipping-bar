@@ -33,3 +33,7 @@
 #fsb-bar > div > span > bdi {
   color: #fff!important;
 }
+
+button[name="update_cart"] {
+    display: none !important;
+}
