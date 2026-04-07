@@ -30,11 +30,9 @@ add_action('wp_enqueue_scripts', function () {
         true
     );
 
-    if (function_exists('WC') && WC()->cart) {
-        wp_localize_script('fsb-script', 'fsbData', [
-            'ajax_url' => admin_url('admin-ajax.php')
-        ]);
-    }
+    wp_localize_script('fsb-script', 'fsbData', [
+        'ajax_url' => admin_url('admin-ajax.php')
+    ]);
 });
 
 add_filter('woocommerce_locate_template', function ($template, $template_name, $template_path) {
