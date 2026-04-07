@@ -11,6 +11,8 @@ define('FSB_URL', plugin_dir_url(__FILE__));
 // includes
 require_once FSB_PATH . 'includes/hooks.php';
 require_once FSB_PATH . 'includes/helpers.php';
+require_once FSB_PATH . 'includes/admin/settings-page.php';
+require_once FSB_PATH . 'includes/admin/settings-register.php';
 
 // assets
 add_action('wp_enqueue_scripts', function () {
