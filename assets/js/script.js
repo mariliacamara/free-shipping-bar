@@ -1,5 +1,7 @@
 jQuery(function ($) {
     $(document.body).on('updated_cart_totals', function () {
-        location.reload();
+        $.get('/wp-admin/admin-ajax.php?action=fsb_refresh', function (html) {
+            $('#fsb-bar').replaceWith(html);
+        });
     });
 });
