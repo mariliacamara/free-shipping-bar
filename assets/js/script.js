@@ -8,9 +8,11 @@ jQuery(function ($) {
 
         if (!btn.length) return;
 
-        const container = btn.closest('.actions');
+        // 🔥 remove o botão original
+        btn.remove();
 
-        // remove antigo
+        const container = $('.woocommerce-cart-form .actions');
+
         container.find('.fsb-button--wrapper').remove();
 
         $.ajax({
