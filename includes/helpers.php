@@ -11,24 +11,29 @@ function fsb_get_bar_data() {
     $cart_total = WC()->cart->get_displayed_subtotal();
     $remaining = $threshold - $cart_total;
 
-    // não mostrar antes do trigger
     if ($cart_total < $min_trigger) {
         return null;
     }
 
-    // link
+    $link = '#';
+    $label = 'Ver promoções';
+
     if (($options['button_type'] ?? '') === 'category') {
-        $link = get_term_link($options['category'], 'product_cat');
-        $label = 'Ver produtos';
+        if (!empty($options['category'])) {
+            $term_link = get_term_link((int)$options['category'], 'product_cat');
+
+            if (!is_wp_error($term_link)) {
+                $link = $term_link;
+                $label = 'Ver produtos';
+            }
+        }
     } else {
-        $link = $options['url'] ?? '#';
+        $link = !empty($options['url']) ? $options['url'] : '#';
         $label = $options['label'] ?? 'Ver promoções';
     }
 
     return [
         'remaining' => $remaining,
-        'threshold' => $threshold,
-        'cart_total' => $cart_total,
         'link' => $link,
         'label' => $label,
     ];
