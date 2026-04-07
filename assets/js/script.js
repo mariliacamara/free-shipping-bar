@@ -1,42 +1,25 @@
 jQuery(function ($) {
 
-    if (!$('body').hasClass('woocommerce-cart')) return;
-
-    function replaceUpdateButton() {
-
+    function killUpdateButton() {
         const btn = $('button[name="update_cart"]');
 
-        if (!btn.length) return;
-
-        // 🔥 remove o botão original
-        btn.remove();
-
-        const container = $('.woocommerce-cart-form .actions');
-
-        container.find('.fsb-button--wrapper').remove();
-
-        $.ajax({
-            url: fsbData.ajax_url,
-            method: 'GET',
-            data: {
-                action: 'fsb_get_button'
-            },
-            success: function (html) {
-
-                if (!html) return;
-
-                container.append(html);
-            }
-        });
+        if (btn.length) {
+            btn.remove(); // remove MESMO
+        }
     }
 
-    // inicial
-    $(document.body).on('updated_cart_totals updated_wc_div', function () {
-        replaceUpdateButton();
-    });
+    // roda várias vezes no início (pra pegar re-render do tema)
+    const interval = setInterval(() => {
+        killUpdateButton();
+    }, 300);
 
-    // quando Woo atualiza
-    $(document.body).on('updated_cart_totals', function () {
-        replaceUpdateButton();
+    // para depois de 5 segundos (performance)
+    setTimeout(() => {
+        clearInterval(interval);
+    }, 5000);
+
+    // quando Woo atualiza carrinho
+    $(document.body).on('updated_cart_totals updated_wc_div', function () {
+        killUpdateButton();
     });
 });

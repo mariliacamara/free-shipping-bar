@@ -34,17 +34,3 @@ add_action('wp_enqueue_scripts', function () {
         'ajax_url' => admin_url('admin-ajax.php')
     ]);
 });
-
-add_filter('woocommerce_locate_template', function ($template, $template_name, $template_path) {
-
-    $plugin_path = FSB_PATH . 'templates/woocommerce/';
-
-    $custom_template = $plugin_path . $template_name;
-
-    if (file_exists($custom_template)) {
-        return $custom_template;
-    }
-
-    return $template;
-
-}, 10, 3);
