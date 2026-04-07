@@ -5,9 +5,11 @@
     <div class="fsb-bar fsb-warning">
       FALTAM <?php echo wc_price($data['remaining']); ?> PARA PORTES GRÁTIS!
     </div>
-    <a href="<?php echo esc_url($data['link']); ?>" class="fsb-button">
-      <?php echo esc_html($data['label']); ?>
-    </a>
+    <div class="fsb-bar fsb-warning">
+      <a href="<?php echo esc_url($data['link']); ?>" class="fsb-button">
+        <?php echo esc_html($data['label']); ?>
+      </a>
+    </div>
   <?php else: ?>
     <div class="fsb-bar fsb-success">
       🎉 VOCÊ GANHOU FRETE GRÁTIS!
