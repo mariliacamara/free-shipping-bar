@@ -19,17 +19,21 @@ function fsb_get_bar_data() {
     $label = 'Ver promoções';
 
     if (($options['button_type'] ?? '') === 'category') {
-        if (!empty($options['category'])) {
-            $term_link = get_term_link((int)$options['category'], 'product_cat');
+      if (!empty($options['category'])) {
+        $term_link = get_term_link((int)$options['category'], 'product_cat');
 
-            if (!is_wp_error($term_link)) {
-                $link = $term_link;
-                $label = 'Ver produtos';
-            }
+        if ($term && !is_wp_error($term)) {
+          $term_link = get_term_link($term);
+
+          if (!is_wp_error($term_link)) {
+            $link = $term_link;
+            $label = $term->name;
+          }
         }
+      }
     } else {
-        $link = !empty($options['url']) ? $options['url'] : '#';
-        $label = $options['label'] ?? 'Ver promoções';
+      $link = !empty($options['url']) ? $options['url'] : '#';
+      $label = !empty($options['label']) ? $options['label'] : 'Ver promoções';
     }
 
     return [

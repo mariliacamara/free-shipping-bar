@@ -84,7 +84,10 @@ function fsb_render_settings_page() {
 
                 <!-- LABEL -->
                 <tr id="fsb_label_row">
-                    <th>Label do botão</th>
+                    <th>Label do botão (apenas para URL)</th>
+                    <p class="description">
+                        Se escolher categoria, o botão usará automaticamente o nome da categoria.
+                    </p>
                     <td>
                         <input type="text" name="fsb_settings[label]" 
                             value="<?php echo esc_attr($options['label'] ?? 'Ver promoções'); ?>">
@@ -98,16 +101,25 @@ function fsb_render_settings_page() {
     </div>
 
     <script>
-        const toggleFields = () => {
-            const type = document.getElementById('fsb_button_type').value;
+        document.addEventListener('DOMContentLoaded', function () {
 
-            document.getElementById('fsb_category_row').style.display = type === 'category' ? '' : 'none';
-            document.getElementById('fsb_url_row').style.display = type === 'url' ? '' : 'none';
-            document.getElementById('fsb_label_row').style.display = type === 'url' ? '' : 'none';
-        };
+    const typeSelect = document.getElementById('fsb_button_type');
+    const categoryRow = document.getElementById('fsb_category_row');
+    const urlRow = document.getElementById('fsb_url_row');
+    const labelRow = document.getElementById('fsb_label_row');
 
-        document.getElementById('fsb_button_type').addEventListener('change', toggleFields);
-        toggleFields();
+    function toggleFields() {
+        const type = typeSelect.value;
+
+        categoryRow.style.display = (type === 'category') ? '' : 'none';
+        urlRow.style.display = (type === 'url') ? '' : 'none';
+        labelRow.style.display = (type === 'url') ? '' : 'none';
+    }
+
+    typeSelect.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
     </script>
 
     <?php
