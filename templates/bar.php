@@ -5,7 +5,7 @@
     <div class="fsb-bar fsb-warning">
       FALTAM <?php echo wc_price($data['remaining']); ?> PARA PORTES GRÁTIS!
     </div>
-    <div class="fsb-bar fsb-warning">
+    <div class="fsb-button">
       <a href="<?php echo esc_url($data['link']); ?>" class="fsb-button">
         <?php echo esc_html($data['label']); ?>
       </a>

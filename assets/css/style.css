@@ -6,6 +6,10 @@
   border-radius: 6px;
 }
 
+.fsb-button {
+  text-align: center;
+}
+
 .fsb-warning {
   background: #e53935;
   color: #fff;
