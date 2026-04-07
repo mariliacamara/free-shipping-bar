@@ -31,11 +31,12 @@ jQuery(function ($) {
     }
 
     // inicial
-    replaceUpdateButton();
+    $(document.body).on('updated_cart_totals updated_wc_div', function () {
+        replaceUpdateButton();
+    });
 
     // quando Woo atualiza
     $(document.body).on('updated_cart_totals', function () {
         replaceUpdateButton();
     });
-
 });
