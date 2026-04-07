@@ -1,31 +1,26 @@
 jQuery(function ($) {
-  if (!$('body').hasClass('woocommerce-cart')) return;
 
+    if (!$('body').hasClass('woocommerce-cart')) return;
 
-  function replaceUpdateButton() {
-    const btn = $('button[name="update_cart"]');
+    function replaceUpdateButton() {
+        const btn = $('button[name="update_cart"]');
 
-    if (!btn.length) return;
+        if (!btn.length) return;
 
-    const container = btn.parent();
+        const container = btn.closest('.actions');
 
-    container.find('.fsb-cart-button').remove();
+        // remove botão antigo
+        container.find('.fsb-button--wrapper').remove();
 
-    const link = (typeof fsbData !== 'undefined' && fsbData.link) ? fsbData.link : '#';
-    const label = (typeof fsbData !== 'undefined' && fsbData.label) ? fsbData.label : 'Ver promoções';
+        if (typeof fsbData !== 'undefined' && fsbData.button_html) {
+            container.append(fsbData.button_html);
+        }
+    }
 
-    const buttonHTML = `
-      <a href="${link}" class="button fsb-cart-button">
-          ${label}
-      </a>
-    `;
-
-    container.append(buttonHTML);
-  }
-
-  replaceUpdateButton();
-
-  $(document.body).on('updated_cart_totals', function () {
     replaceUpdateButton();
-  });
+
+    $(document.body).on('updated_cart_totals', function () {
+        replaceUpdateButton();
+    });
+
 });

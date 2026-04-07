@@ -17,7 +17,7 @@ require_once FSB_PATH . 'includes/admin/settings-register.php';
 // assets
 add_action('wp_enqueue_scripts', function () {
 
-    // 🔒 opcional: só carregar no carrinho
+    // só carrega no carrinho
     if (function_exists('is_cart') && !is_cart()) {
         return;
     }
@@ -35,16 +35,28 @@ add_action('wp_enqueue_scripts', function () {
         true
     );
 
-    // garante que WooCommerce já está disponível
+    // garante que WooCommerce está pronto
     if (function_exists('WC') && WC()->cart) {
 
         $data = fsb_get_bar_data();
 
+        ob_start();
+
+        if ($data) {
+            ?>
+            <div class="fsb-button--wrapper">
+                <a href="<?php echo esc_url($data['link']); ?>" class="fsb-button">
+                    <?php echo esc_html($data['label']); ?>
+                </a>
+            </div>
+            <?php
+        }
+
+        $button_html = ob_get_clean();
+
         wp_localize_script('fsb-script', 'fsbData', [
-            'link'      => $data['link'] ?? '#',
-            'label'     => $data['label'] ?? 'Ver promoções',
-            'remaining' => $data['remaining'] ?? 0
+            'button_html' => $button_html,
+            'remaining'   => $data['remaining'] ?? 0
         ]);
     }
-
 });
