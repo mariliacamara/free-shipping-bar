@@ -17,7 +17,21 @@ function fsb_add_cart_button() {
 
     if (!$data) return;
 
-    echo '<a href="' . esc_url($data['link']) . '" class="button fsb-cart-button">
+    echo '<a href="' . esc_url($data['link']) . '" id="fsb-button" class="button fsb-cart-button">
         ' . esc_html($data['label']) . '
     </a>';
+}
+
+add_action('woocommerce_proceed_to_checkout', 'fsb_add_button_below_checkout', 20);
+
+function fsb_add_button_below_checkout() {
+    $data = fsb_get_bar_data();
+
+    if (!$data) return;
+
+    echo '<div class="fsb-checkout-button-wrapper" style="margin-top:10px;">
+        <a href="' . esc_url($data['link']) . '" class="button fsb-button" style="width:100%; text-align:center;">
+            ' . esc_html($data['label']) . '
+        </a>
+    </div>';
 }
