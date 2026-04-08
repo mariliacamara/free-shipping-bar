@@ -35,7 +35,15 @@ function fsb_get_bar_data() {
 
                 if (!is_wp_error($term_link)) {
                     $link  = $term_link;
-                    $label = 'Ver ' . $term->name;
+                    // normaliza o nome (lowercase e sem acento opcional)
+                    $term_name = strtolower($term->name);
+
+                    // regra especial
+                    if ($term_name === 'promoções' || $term_name === 'promocoes') {
+                        $label = 'Ver produtos em promoção';
+                    } else {
+                        $label = 'Ver ' . $term->name;
+                    }
                 }
             }
         }
