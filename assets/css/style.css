@@ -39,11 +39,11 @@ button[name="update_cart"],
     display: none !important;
 }
 
-#fsb-bar .woocommerce-Price-amount {
-    color: #fff;
-    font-weight: bold;
+#fsb-bar .woocommerce-Price-amount.amount {
+    color: #fff !important;
+    font-weight: bold !important;
 }
 
 #fsb-bar .woocommerce-Price-currencySymbol {
-    color: #fff;
+    color: #fff !important;
 }
