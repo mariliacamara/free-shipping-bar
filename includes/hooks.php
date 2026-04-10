@@ -11,6 +11,7 @@ function fsb_render_bar() {
 }
 
 add_action('woocommerce_proceed_to_checkout', 'fsb_add_button_below_checkout', 999);
+add_action('woocommerce_review_order_after_submit', 'fsb_add_button_below_checkout', 20);
 
 function fsb_add_button_below_checkout() {
     $data = fsb_get_bar_data();
