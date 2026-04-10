@@ -18,7 +18,7 @@ function fsb_add_button_below_checkout() {
     if (!$data) return;
 
     echo '<div class="fsb-checkout-button-wrapper">
-        <a href="' . esc_url($data['link']) . '" class="button fsb-button" style="width:100%; text-align:center; border-radius: 5px;">
+        <a href="' . esc_url($data['link']) . '" class="button fsb-button" style="width:100%; text-align:center; border-radius: 5px; background: #29b0c2;  color: #fff;">
             ' . esc_html($data['label']) . '
         </a>
     </div>';
