@@ -3,12 +3,21 @@
 if (!defined('ABSPATH')) exit;
 
 add_action('woocommerce_cart_totals_after_order_total', 'fsb_render_bar');
-add_action('woocommerce_review_order_after_order_total', 'fsb_render_bar');
 
 function fsb_render_bar() {
     $data = fsb_get_bar_data();
 
     include FSB_PATH . 'templates/bar.php';
+}
+
+add_action('woocommerce_review_order_after_order_total', 'fsb_render_bar_once');
+function fsb_render_bar_once() {
+    static $rendered = false;
+
+    if ($rendered) return;
+    $rendered = true;
+
+    fsb_render_bar();
 }
 
 add_action('woocommerce_proceed_to_checkout', 'fsb_add_button_below_checkout', 999);
