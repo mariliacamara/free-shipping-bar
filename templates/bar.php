@@ -3,7 +3,7 @@
 <div id="fsb-bar">
   <?php if ($data['remaining'] > 0): ?>
     <div class="fsb-bar fsb-warning">
-      FALTAM <?php echo wc_price($data['remaining']); ?> PARA PORTES GRÁTIS!
+      FALTAM <strong><?php echo wc_price($data['remaining']); ?></strong> PARA PORTES GRÁTIS!
     </div>
   <?php else: ?>
     <div class="fsb-bar fsb-success">
