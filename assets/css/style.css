@@ -40,10 +40,10 @@ button[name="update_cart"],
 }
 
 #fsb-bar .woocommerce-Price-amount.amount {
-    color: #fff !important;
+    color: #010a53 !important;
     font-weight: bold !important;
 }
 
 #fsb-bar .woocommerce-Price-currencySymbol {
-    color: #fff !important;
+    color: #010a53 !important;
 }
