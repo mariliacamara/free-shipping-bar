@@ -7,7 +7,7 @@
     </div>
   <?php else: ?>
     <div class="fsb-bar fsb-success" style="margin-bottom: 5px">
-      🎉 VOCÊ GANHOU FRETE GRÁTIS!
+      🎉 GANHOU ENVIO GRÁTIS!
     </div>
   <?php endif; ?>
 </div>
