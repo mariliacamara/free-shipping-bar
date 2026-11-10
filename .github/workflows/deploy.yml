@@ -1,0 +1,59 @@
+name: Deploy
+
+# Envia o plugin para wp-content/plugins/free-shipping-bar/ da zincomed.com
+# a cada push na branch production. A chave SSH só consegue gravar nessa
+# pasta: no servidor ela está presa a ~/bin/deploy-free-shipping-bar.sh.
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to zincomed.com
+    runs-on: ubuntu-24.04
+    environment: production
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+
+      - name: PHP syntax
+        run: find . -name '*.php' -not -path './.git/*' -print0 | xargs -0 -n1 php -l
+
+      - name: SSH key
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ vars.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Rsync
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+        run: |
+          rsync -rlptz --delete --chmod=D755,F644 \
+            --exclude='.git*' --exclude='.github/' \
+            -e "ssh -i ~/.ssh/deploy -p ${DEPLOY_PORT} -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            ./ "${DEPLOY_USER}@${DEPLOY_HOST}:domains/zincomed.com/public_html/wp-content/plugins/free-shipping-bar/"
+
+      - name: Check site
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' -A 'Mozilla/5.0 (deploy-check)' https://zincomed.com/)
+          echo "home: $code"
+          test "$code" = 200

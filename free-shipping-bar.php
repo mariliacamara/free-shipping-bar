@@ -1,6 +1,16 @@
 <?php
 /**
- * Plugin Name: Free Shipping Bar
+ * Plugin Name:       Free Shipping Bar
+ * Plugin URI:        https://github.com/mariliacamara/free-shipping-bar
+ * Description:       Mostra no carrinho e no checkout quanto falta para os portes grátis, com um botão para uma categoria ou página de promoções.
+ * Version:           1.0.0
+ * Requires at least: 6.0
+ * Requires PHP:      7.4
+ * Requires Plugins:  woocommerce
+ * Author:            Marília Câmara
+ * Author URI:        https://marilia.dev.br
+ * License:           GPL-3.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 if (!defined('ABSPATH')) exit;
