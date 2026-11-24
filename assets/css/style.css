@@ -11,23 +11,26 @@
 }
 
 .fsb-warning {
-  background: #e53935;
+  background: var(--fsb-cor-falta, #e53935);
   color: #fff;
 }
 
 .fsb-success {
-  background: #2e7d32;
+  background: var(--fsb-cor-ganhou, #2e7d32);
   color: #fff;
 }
 
-.fsb-button {
+.fsb-button,
+.fsb-checkout-button-wrapper .button.fsb-button {
   display: inline-block;
+  width: 100%;
   margin-top: 8px;
   padding: 8px 12px;
-  background: #1e3a8a;
+  text-align: center;
+  background: var(--fsb-cor-botao, #29b0c2);
   color: #fff;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 #fsb-bar .amount {
@@ -46,4 +49,18 @@ button[name="update_cart"],
 
 #fsb-bar .woocommerce-Price-currencySymbol {
     color: #fff !important;
+}
+/* Mesmo espaçamento do style inline da 1.0 (o contentor vazio não ocupa espaço). */
+.fsb-bar-wrapper:not(:empty),
+.fsb-success {
+  margin-bottom: 5px;
+}
+
+/* O botão da 1.0 tinha estes valores inline, que ganhavam ao CSS do tema: manter a mesma prioridade. */
+.fsb-checkout-button-wrapper .button.fsb-button {
+  width: 100% !important;
+  text-align: center !important;
+  border-radius: 5px !important;
+  background: var(--fsb-cor-botao, #29b0c2) !important;
+  color: #fff !important;
 }
