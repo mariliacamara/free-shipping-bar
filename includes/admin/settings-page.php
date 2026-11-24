@@ -2,15 +2,23 @@
 
 if (!defined('ABSPATH')) exit;
 
-add_action('admin_menu', function () {
-    $hook = add_menu_page(
+/**
+ * Página do plugin no menu Camorim Tech (partilhado pelos plugins da Camorim Tech).
+ *
+ * @return void
+ */
+function fsb_register_admin_page() {
+    $hook = add_submenu_page(
+        'camorim-tech',
         'Free Shipping Bar',
-        'Free Shipping',
+        'Free Shipping Bar',
         'manage_options',
         'fsb-settings',
-        'fsb_render_settings_page',
-        'dashicons-cart'
+        'fsb_render_settings_page'
     );
+    if (!$hook) {
+        return;
+    }
 
     add_action('admin_enqueue_scripts', function ($current) use ($hook) {
         if ($current !== $hook) {
@@ -20,7 +28,8 @@ add_action('admin_menu', function () {
         wp_enqueue_style('fsb-admin', FSB_URL . 'assets/admin/admin.css', [], FSB_VERSION);
         wp_enqueue_script('fsb-admin', FSB_URL . 'assets/admin/admin.js', ['jquery', 'wp-color-picker'], FSB_VERSION, true);
     });
-});
+}
+add_action('admin_menu', 'fsb_register_admin_page');
 
 /**
  * Zonas com envio grátis por valor mínimo, para mostrar na página.
