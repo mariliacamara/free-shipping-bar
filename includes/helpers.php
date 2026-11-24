@@ -2,68 +2,39 @@
 
 if (!defined('ABSPATH')) exit;
 
+/**
+ * Dados da barra para o carrinho atual.
+ *
+ * @return array|null ['remaining' => float, 'threshold' => float, 'button' => array|null],
+ *                    ou null se a zona não tem envio grátis por valor mínimo
+ *                    ou o total está abaixo de «mostrar a partir de».
+ */
 function fsb_get_bar_data() {
-    $options = get_option('fsb_settings');
-
-    if (!$options) return null;
-
-    $threshold   = floatval($options['free_shipping'] ?? 20);
-    $min_trigger = floatval($options['min_trigger'] ?? 0);
-
-    $cart_total = WC()->cart->get_displayed_subtotal();
-    $remaining  = $threshold - $cart_total;
-
-    if ($cart_total < $min_trigger) {
+    $method = fsb_get_free_shipping_method();
+    if (!$method) {
         return null;
     }
 
-    $link  = '#';
-    $label = 'Ver promoções';
+    $options   = fsb_get_options();
+    $threshold = (float) $method->min_amount;
+    $total     = fsb_get_free_shipping_total($method);
 
-    // 🔥 CATEGORY
-    if (($options['button_type'] ?? '') === 'category') {
-
-        $category_id = intval($options['category'] ?? 0);
-
-        if ($category_id > 0) {
-
-            $term = get_term($category_id, 'product_cat');
-
-            if ($term && !is_wp_error($term)) {
-
-                $term_link = get_term_link($term);
-
-                if (!is_wp_error($term_link)) {
-                    $link  = $term_link;
-                    // normaliza o nome (lowercase e sem acento opcional)
-                    $term_name = strtolower($term->name);
-
-                    // regra especial
-                    if ($term_name === 'promoções' || $term_name === 'promocoes') {
-                        $label = 'Ver produtos em promoção';
-                    } else {
-                        $label = 'Ver ' . $term->name;
-                    }
-                }
-            }
-        }
+    if ($total < (float) $options['min_trigger']) {
+        return null;
     }
 
-    // 🔥 URL
-    else {
+    $remaining = round($threshold - $total, wc_get_price_decimals());
 
-        if (!empty($options['url'])) {
-            $link = esc_url($options['url']);
-        }
-
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-        }
+    // Se a WooCommerce já dá o envio grátis (cupão de portes grátis com «cupão ou valor mínimo»,
+    // ou outro plugin), a barra diz que ganhou, como no checkout.
+    $packages = WC()->cart->get_shipping_packages();
+    if ($remaining > 0 && $packages && $method->is_available(reset($packages))) {
+        $remaining = 0;
     }
 
-    return [
+    return array(
         'remaining' => $remaining,
-        'link'      => $link,
-        'label'     => $label,
-    ];
+        'threshold' => $threshold,
+        'button'    => fsb_get_button($options),
+    );
 }
