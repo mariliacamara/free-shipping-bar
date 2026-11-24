@@ -3,7 +3,7 @@
  * Plugin Name:       Free Shipping Bar
  * Plugin URI:        https://github.com/mariliacamara/free-shipping-bar
  * Description:       Mostra no carrinho e no checkout quanto falta para os portes grátis, com um botão para uma categoria ou página de promoções.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) exit;
 
 define('FSB_PATH', plugin_dir_path(__FILE__));
 define('FSB_URL', plugin_dir_url(__FILE__));
-define('FSB_VERSION', '1.1.1');
+define('FSB_VERSION', '1.1.2');
 
 // includes
 require_once FSB_PATH . 'includes/threshold.php';

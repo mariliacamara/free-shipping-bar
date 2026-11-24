@@ -98,13 +98,13 @@ function fsb_render_settings_page() {
                 <section class="fsb-card">
                     <h2>Quando mostrar</h2>
                     <label class="fsb-field" for="fsb_min_trigger">
-                        <span class="fsb-label">Mostrar a partir de</span>
+                        <span class="fsb-label">Esconder a barra enquanto o carrinho tiver menos de</span>
                         <span class="fsb-input-suffix">
                             <input type="number" step="0.01" min="0" id="fsb_min_trigger" name="fsb_settings[min_trigger]"
                                 value="<?php echo esc_attr($options['min_trigger']); ?>">
                             <span>€</span>
                         </span>
-                        <span class="fsb-help">Total do carrinho a partir do qual a barra aparece. 0 mostra sempre.</span>
+                        <span class="fsb-help">Evita mostrar «faltam X» a quem tem pouco no carrinho. Use 0 para mostrar sempre.</span>
                     </label>
                 </section>
 
