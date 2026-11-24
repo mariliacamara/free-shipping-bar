@@ -56,6 +56,12 @@ register_shutdown_function(function () use ($cat_id, $page_id, $promo, $promo_cr
     fsb_assert(fsb_get_button(array('button_type' => '')) === null, 'sem tipo: sem botão');
     fsb_assert(fsb_get_button(array()) === null, 'opções vazias: sem botão');
 
+    // «Página» escolhida sem página (page=0): get_post(0) cairia no post global da página atual.
+    $GLOBALS['post'] = get_post($page_id);
+    fsb_assert(fsb_get_button(array('button_type' => 'page', 'page' => 0)) === null, 'página não escolhida (0) com post global definido: sem botão');
+    fsb_assert(fsb_get_button(array('button_type' => 'category', 'category' => 0)) === null, 'categoria não escolhida (0): sem botão');
+    unset($GLOBALS['post']);
+
     wp_delete_term($cat_id, 'product_cat');
     fsb_assert(fsb_get_button(array('button_type' => 'category', 'category' => $cat_id)) === null, 'categoria apagada: sem botão');
 

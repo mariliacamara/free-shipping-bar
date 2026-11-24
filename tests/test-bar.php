@@ -41,6 +41,14 @@ fsb_assert(strpos($btn, 'href="https://exemplo.pt/x"') !== false && strpos($btn,
 
 fsb_assert(fsb_render(null) === '<div id="fsb-bar" class="fsb-bar-wrapper"></div>', 'sem dados: só o contentor vazio');
 
+// Quando a WooCommerce dá o envio grátis (ex.: cupão de portes grátis com «cupão ou valor mínimo»,
+// ou outro plugin a ligar o método), a barra tem de dizer que ganhou, mesmo abaixo do valor.
+add_filter('woocommerce_shipping_free_shipping_is_available', '__return_true', 99);
+fsb_test_cart($pid, 1, $cp_cont, $st_cont);
+$d = fsb_get_bar_data();
+fsb_assert(is_array($d) && $d['remaining'] <= 0, 'Envio grátis disponível abaixo do valor: a barra diz que ganhou');
+remove_filter('woocommerce_shipping_free_shipping_is_available', '__return_true', 99);
+
 update_option('fsb_settings', array('min_trigger' => 100000, 'button_type' => ''));
 fsb_assert(fsb_get_bar_data() === null, 'total abaixo de "mostrar a partir de": sem barra');
 

@@ -11,10 +11,16 @@ PRODUCAO="$SITE/wp-content/plugins/free-shipping-bar/"
 DEV="$SITE/dev/wp-content/plugins/free-shipping-bar/"
 CMD="$SSH_ORIGINAL_COMMAND"
 
-case "$CMD" in
-	*[\;\&\|\`\$\<\>\(\)]* | *--sender* | *..*/*) ;;
-	"rsync --server "*" . $PRODUCAO" | "rsync --server "*" . $DEV") exec $CMD ;;
-esac
+# Só o formato exato que o rsync do workflow envia: opções curtas seguras antes do «e»
+# (o «e» consome o resto como lista de capacidades), --log-format=%i opcional, --delete,
+# e o destino. Fica de fora tudo o que escreve noutro sítio ou segue links
+# (-K, -T, --log-file, --temp-dir, --backup-dir, --partial-dir, --write-batch, ...).
+OPCOES='-[ltprzvn]+e\.[A-Za-z]+( --log-format=%i)? --delete'
+if [[ "$CMD" =~ ^rsync\ --server\ $OPCOES\ \.\ (.+)$ ]]; then
+	case "${BASH_REMATCH[2]}" in
+		"$PRODUCAO" | "$DEV") exec $CMD ;;
+	esac
+fi
 
 echo "Recusado: esta chave só envia ficheiros para o free-shipping-bar." >&2
 exit 1

@@ -45,7 +45,11 @@ function fsb_get_button($options) {
     $label = isset($options['label']) ? trim((string) $options['label']) : '';
 
     if ($type === 'category') {
-        $term = get_term((int) ($options['category'] ?? 0), 'product_cat');
+        $term_id = (int) ($options['category'] ?? 0);
+        if ($term_id <= 0) {
+            return null;
+        }
+        $term = get_term($term_id, 'product_cat');
         if (!$term || is_wp_error($term)) {
             return null;
         }
@@ -59,7 +63,12 @@ function fsb_get_button($options) {
     }
 
     if ($type === 'page') {
-        $page = get_post((int) ($options['page'] ?? 0));
+        // get_post(0) devolveria o post global (a página atual): sem página escolhida, sem botão.
+        $page_id = (int) ($options['page'] ?? 0);
+        if ($page_id <= 0) {
+            return null;
+        }
+        $page = get_post($page_id);
         if (!$page || $page->post_type !== 'page' || $page->post_status !== 'publish') {
             return null;
         }

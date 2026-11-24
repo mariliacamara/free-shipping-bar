@@ -23,8 +23,17 @@ function fsb_get_bar_data() {
         return null;
     }
 
+    $remaining = round($threshold - $total, wc_get_price_decimals());
+
+    // Se a WooCommerce já dá o envio grátis (cupão de portes grátis com «cupão ou valor mínimo»,
+    // ou outro plugin), a barra diz que ganhou, como no checkout.
+    $packages = WC()->cart->get_shipping_packages();
+    if ($remaining > 0 && $packages && $method->is_available(reset($packages))) {
+        $remaining = 0;
+    }
+
     return array(
-        'remaining' => round($threshold - $total, wc_get_price_decimals()),
+        'remaining' => $remaining,
         'threshold' => $threshold,
         'button'    => fsb_get_button($options),
     );
